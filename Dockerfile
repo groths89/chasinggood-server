@@ -1,6 +1,11 @@
+# Use the official nginx image as the base
 FROM nginx:stable-alpine
 
-ADD docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+# Copy the nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /var/www/html/app
-COPY ./nginx.conf /etc/nginx/templates/nginx.conf.template
+# Expose the port the nginx listens on (typically 80)
+EXPOSE 80
+
+# Run nginx in the foreground
+CMD [ "nginx", "-g", "daemon off;" ]
